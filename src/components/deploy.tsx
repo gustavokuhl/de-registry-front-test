@@ -31,7 +31,11 @@ function Deploy() {
     <div className="flex flex-col gap-2">
       <h1 className="text-xl">Test API</h1>
       <p>Verify your contract</p>
-      <textarea className="min-h-64" readOnly value={code} />
+      <textarea
+        className="min-h-64 bg-slate-200 rounded-lg p-4"
+        readOnly
+        value={code}
+      />
       <Button className="" onClick={clickButton}>
         Deploy on Otavio API
       </Button>
