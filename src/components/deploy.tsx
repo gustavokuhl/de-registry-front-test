@@ -4,13 +4,17 @@ import Button from "./button"
 
 function Deploy() {
   async function clickButton() {
-    console.log("click")
+    const rest = await fetch("/api", { method: "POST" })
+    console.log(await rest.json())
   }
-  // return <button onClick={clickButton}>Deploy</button>
+
   return (
-    <Button className="" onClick={clickButton}>
-      teste
-    </Button>
+    <div>
+      <h1 className="text-xl">Test API</h1>
+      <Button className="" onClick={clickButton}>
+        teste
+      </Button>
+    </div>
   )
 }
 
