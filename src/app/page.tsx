@@ -3,8 +3,7 @@ import { PrismaClient } from "@prisma/client"
 const pinataSDK = require("@pinata/sdk")
 
 const pinata = new pinataSDK({
-  pinataJWTKey:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIyMDJlMjFhYS1iZWMwLTRjN2UtODU3OS04M2ZlMjhlN2NkNWEiLCJlbWFpbCI6InI0dG9AdDBmdS50ZWNoIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjdhNDZiYjIzNDNhYWY4NGRhYjBlIiwic2NvcGVkS2V5U2VjcmV0IjoiMzkzZTc4NWUyZjc2ZmFiY2U0N2Y2MjhlMmQ5ZmEwYzgwYWU1ZGEzNDk0OGQ2Zjg3MTJjOWE5OGExMzM1NzgzMCIsImlhdCI6MTcxMTIyMzkxMn0.fJzN8wCuqD82Lbm7VjGbkJ53ypjHMJZ6apxFvD4Sn8E",
+  pinataJWTKey: process.env.PINATA_JWT,
 })
 const prisma = new PrismaClient()
 
@@ -72,7 +71,7 @@ export default function Home() {
     const res = await pinata.pinJSONToIPFS(json)
     console.log(res)
 
-    const contrato = await prisma.Contrato.create({
+    const contrato = await prisma.contrato.create({
       data: {
         address: res.IpfsHash,
       },

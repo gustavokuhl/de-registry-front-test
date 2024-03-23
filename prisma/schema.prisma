@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Contrato {
+model contrato {
   id      Int    @id @default(autoincrement())
   address String @unique
 }
