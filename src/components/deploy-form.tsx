@@ -1,3 +1,5 @@
+import pinata from "@/app/lib/pinata-client"
+
 function DeployForm() {
   async function onDeployPin(formData: FormData) {
     "use server"
