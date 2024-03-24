@@ -13,8 +13,23 @@ function Deploy() {
   const [contractAddress, setContractAddress] = useState<string>("")
   const [pinataJsonAddress, setPinataJsonAddress] = useState<string>("")
   const [pinataPdfAddress, setPinataPdfAddress] = useState<string>("")
-
+  const [contractData, setContractData] = useState<any>()
   const userWallet = useWallet()
+
+  async function fetchContractData() {
+    const userWalletAddress = await userWallet?.getAddress()
+    if (!userWalletAddress) return
+
+    const data = await fetch("/api/contracts/retrieve", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ cidOwnerAddress: userWalletAddress.substring(2) }),
+    })
+    const json = JSON.parse(await data.json())
+    setContractData(json)
+  }
 
   async function fetchSampleContract() {
     const data = { pinataId: PINATA_CONTRACT_ID }
@@ -379,6 +394,15 @@ function Deploy() {
           </div>
         </>
       ) : null}
+      <div className="flex flex-col gap-1">
+        <Button onClick={fetchContractData}>Fetch data for user</Button>
+        <textarea
+          className="text-sm min-h-64 bg-slate-200 rounded-lg p-4"
+          name="contractCode"
+          readOnly
+          value={JSON.stringify(contractData, null, 2)}
+        />
+      </div>
     </div>
   )
 }
