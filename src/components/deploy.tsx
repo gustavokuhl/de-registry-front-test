@@ -3,24 +3,31 @@
 import { useState } from "react"
 import Button from "./button"
 
+interface ContractData {
+  supplyAgent: {
+    cnpj: string
+    name: string
+    address: {
+      street: string
+      city: string
+      state: string
+      complement: string
+    }
+    inscricaoEstadual: number
+    inscricaoMunicipal: number
+  }
+  duration: number
+  since: number
+  unitsMeasure: string
+  contractAddress: string
+}
+
 function Deploy() {
   const [code, setCode] = useState("")
   const [result, setResult] = useState<any>()
   const [deploying, setDeploying] = useState<boolean>(false)
+  const [contractAddress, setContractAddress] = useState<string>("")
   const [pinataAddress, setPinataAddress] = useState<string>("")
-  const [data, setData] = useState<{
-    address: string
-    name: string
-    cpf: string
-  }>({
-    address: "",
-    name: "",
-    cpf: "",
-  })
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setData((data) => ({ ...data, [e.target.name]: e.target.value }))
-  }
 
   async function fetchSampleContract() {
     const response = await fetch("/api/contracts", { method: "POST" })
@@ -28,7 +35,26 @@ function Deploy() {
     setCode(json.code)
   }
 
-  async function saveOnPinata() {
+  async function saveOnPinata(formData: FormData) {
+    const data = {
+      supplyAgent: {
+        cnpj: formData.get("supplyAgent.cnpj"),
+        name: formData.get("supplyAgent.name"),
+        inscricaoEstadual: formData.get("supplyAgent.inscricaoEstadual"),
+        inscricaoMunicipal: formData.get("supplyAgent.inscricaoMunicipal"),
+        address: {
+          street: formData.get("supplyAgent.address.street"),
+          city: formData.get("supplyAgent.address.city"),
+          state: formData.get("supplyAgent.address.state"),
+          complement: formData.get("supplyAgent.address.complement"),
+        },
+      },
+      duration: formData.get("duration"),
+      since: formData.get("since"),
+      unitsMeasure: formData.get("unitsMeasure"),
+      contractAddress: formData.get("contractAddress"),
+    }
+
     const response = await fetch("/api/pinata", {
       method: "POST",
       headers: {
@@ -53,7 +79,7 @@ function Deploy() {
     const json = await resDeploy.json()
 
     setResult(JSON.stringify(json, null, 2))
-    setData((data) => ({ ...data, address: json.contractAddress }))
+    setContractAddress(json.contractAddress)
     setDeploying(false)
   }
 
@@ -84,36 +110,110 @@ function Deploy() {
       </div>
       <div className="flex flex-col gap-1">
         <p>Save the data on Pinata</p>
-        <input
-          onChange={handleInputChange}
-          className="bg-slate-200 rounded-lg p-2"
-          type="text"
-          placeholder="name"
-          name="name"
-        />
-        <input
-          onChange={handleInputChange}
-          className="bg-slate-200 rounded-lg p-2"
-          type="text"
-          placeholder="cpf"
-          name="cpf"
-        />
-        <input
-          onChange={handleInputChange}
-          className="bg-slate-200 rounded-lg p-2"
-          type="text"
-          value={data.address}
-          placeholder="address"
-          name="address"
-          readOnly
-          disabled
-        />
-        <Button
-          disabled={data.address === "" || pinataAddress !== ""}
-          onClick={saveOnPinata}
-        >
-          Save on Pinata
-        </Button>
+        <form className="flex flex-col gap-2" action={saveOnPinata}>
+          <input
+            className="bg-slate-200 rounded-lg p-2"
+            type="text"
+            value={contractAddress}
+            placeholder="contract address"
+            name="contractAddress"
+            readOnly
+          />
+          <div className="flex flex-col gap-1">
+            <p className="text-xs">Supply Agent</p>
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="name"
+              name="supplyAgent.name"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="cnpj"
+              name="supplyAgent.cnpj"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="number"
+              placeholder="Inscrição Estadual"
+              name="supplyAgent.inscricaoEstadual"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="number"
+              placeholder="Inscrição Municipal"
+              name="supplyAgent.inscricaoMunicipal"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs">Physical Address</p>
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="street"
+              name="supplyAgent.address.street"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="city"
+              name="supplyAgent.address.city"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="state"
+              name="supplyAgent.address.state"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="complement"
+              name="supplyAgent.address.complement"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <p className="text-xs">Contract Data</p>
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="number"
+              placeholder="duration"
+              name="duration"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="number"
+              placeholder="since"
+              name="since"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="unitsMeasure"
+              name="unitsMeasure"
+            />
+          </div>
+
+          <Button
+            disabled={contractAddress === "" || pinataAddress !== ""}
+            type="submit"
+          >
+            Save on Pinata
+          </Button>
+        </form>
         <Button
           disabled={pinataAddress === ""}
           onClick={() =>

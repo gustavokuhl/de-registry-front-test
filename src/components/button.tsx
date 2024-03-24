@@ -3,11 +3,13 @@ function Button({
   className,
   onClick,
   disabled,
+  type,
 }: Readonly<{
   children: React.ReactNode
   className?: string
   onClick?: () => void
   disabled?: boolean
+  type?: "submit" | "reset" | "button" | undefined
 }>) {
   return (
     <button
