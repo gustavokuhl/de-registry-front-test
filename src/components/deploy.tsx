@@ -11,6 +11,7 @@ function Deploy() {
   const [deploying, setDeploying] = useState<boolean>(false)
   const [contractAddress, setContractAddress] = useState<string>("")
   const [pinataAddress, setPinataAddress] = useState<string>("")
+  const [pinataPdfAddress, setPinataPdfAddress] = useState<string>("")
 
   async function fetchSampleContract() {
     const data = { pinataId: PINATA_CONTRACT_ID }
@@ -61,6 +62,24 @@ function Deploy() {
     })
     const json = await response.json()
     setPinataAddress(json.IpfsHash)
+  }
+
+  async function handleSignFile(formData: FormData) {
+    const fileToUpload = formData.get("signFile")
+    if (!fileToUpload) return
+
+    const data = new FormData()
+    data.set("file", fileToUpload)
+
+    const response = await fetch("/api/pinata/uploadDoc", {
+      method: "POST",
+      body: data,
+    })
+
+    const result = await response.json()
+    console.log(result)
+
+    setPinataPdfAddress(result.IpfsHash)
   }
 
   async function deployCode() {
@@ -264,6 +283,30 @@ function Deploy() {
           }
         >
           Show on Pinata
+        </Button>
+      </div>
+      <div className="flex flex-col gap-1">
+        <p>Sign your document with the off-chain version</p>
+        <form action={handleSignFile} className="flex flex-col gap-1">
+          <input
+            type="file"
+            name="signFile"
+            className="bg-slate-200 rounded-lg p-2"
+            accept="application/pdf"
+          />
+          <Button type="submit">Save on Pinata</Button>
+        </form>
+        <Button
+          disabled={pinataPdfAddress === ""}
+          onClick={() => {
+            window.open(
+              "https://gateway.ipfs.io/ipfs/" + pinataPdfAddress,
+              "_blank",
+              "noopener"
+            )
+          }}
+        >
+          View on Pinata
         </Button>
       </div>
     </div>
