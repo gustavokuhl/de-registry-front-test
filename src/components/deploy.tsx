@@ -247,7 +247,7 @@ function Deploy() {
           </div>
 
           <Button
-            // disabled={contractAddress === "" || pinataAddress !== ""}
+            disabled={contractAddress === "" || pinataAddress !== ""}
             type="submit"
           >
             Save on Pinata
