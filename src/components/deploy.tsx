@@ -392,17 +392,17 @@ function Deploy() {
               Save data on Scroll
             </Button>
           </div>
+          <div className="flex flex-col gap-1">
+            <Button onClick={fetchContractData}>Fetch data for user</Button>
+            <textarea
+              className="text-sm min-h-64 bg-slate-200 rounded-lg p-4"
+              name="contractCode"
+              readOnly
+              value={JSON.stringify(contractData, null, 2)}
+            />
+          </div>
         </>
       ) : null}
-      <div className="flex flex-col gap-1">
-        <Button onClick={fetchContractData}>Fetch data for user</Button>
-        <textarea
-          className="text-sm min-h-64 bg-slate-200 rounded-lg p-4"
-          name="contractCode"
-          readOnly
-          value={JSON.stringify(contractData, null, 2)}
-        />
-      </div>
     </div>
   )
 }
