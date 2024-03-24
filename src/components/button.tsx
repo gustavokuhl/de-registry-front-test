@@ -6,7 +6,7 @@ function Button({
 }: Readonly<{
   children: React.ReactNode
   className?: string
-  onClick?: () => {}
+  onClick?: () => void
   disabled?: boolean
 }>) {
   return (
