@@ -32,14 +32,19 @@ function Deploy() {
       supplyAgent: {
         cnpj: formData.get("supplyAgent.cnpj"),
         name: formData.get("supplyAgent.name"),
+        email: formData.get("supplyAgent.email"),
         inscricaoEstadual: formData.get("supplyAgent.inscricaoEstadual"),
         inscricaoMunicipal: formData.get("supplyAgent.inscricaoMunicipal"),
         address: {
+          cep: formData.get("supplyAgent.address.cep"),
           street: formData.get("supplyAgent.address.street"),
           city: formData.get("supplyAgent.address.city"),
           state: formData.get("supplyAgent.address.state"),
           complement: formData.get("supplyAgent.address.complement"),
         },
+      },
+      supplyArea: {
+        name: formData.get("supplyArea.name"),
       },
       duration: formData.get("duration"),
       since: formData.get("since"),
@@ -142,6 +147,13 @@ function Deploy() {
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
+              placeholder="email"
+              name="supplyAgent.email"
+            />
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
               placeholder="cnpj"
               name="supplyAgent.cnpj"
             />
@@ -161,7 +173,24 @@ function Deploy() {
             />
           </div>
           <div className="flex flex-col gap-1">
+            <p className="text-xs">Supply Area</p>
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="name"
+              name="supplyArea.name"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
             <p className="text-xs">Physical Address</p>
+            <input
+              disabled={contractAddress === ""}
+              className="bg-slate-200 rounded-lg p-2"
+              type="text"
+              placeholder="cep"
+              name="supplyAgent.address.cep"
+            />
             <input
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
@@ -218,7 +247,7 @@ function Deploy() {
           </div>
 
           <Button
-            disabled={contractAddress === "" || pinataAddress !== ""}
+            // disabled={contractAddress === "" || pinataAddress !== ""}
             type="submit"
           >
             Save on Pinata
