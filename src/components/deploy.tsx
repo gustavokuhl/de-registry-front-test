@@ -3,24 +3,7 @@
 import { useState } from "react"
 import Button from "./button"
 
-interface ContractData {
-  supplyAgent: {
-    cnpj: string
-    name: string
-    address: {
-      street: string
-      city: string
-      state: string
-      complement: string
-    }
-    inscricaoEstadual: number
-    inscricaoMunicipal: number
-  }
-  duration: number
-  since: number
-  unitsMeasure: string
-  contractAddress: string
-}
+const PINATA_CONTRACT_ID = "QmfAvVLUUcsdDp25ZWkivxTGjyFDBtaXfcunhMe27AWxgY"
 
 function Deploy() {
   const [code, setCode] = useState("")
@@ -30,7 +13,16 @@ function Deploy() {
   const [pinataAddress, setPinataAddress] = useState<string>("")
 
   async function fetchSampleContract() {
-    const response = await fetch("/api/contracts", { method: "POST" })
+    const data = { pinataId: PINATA_CONTRACT_ID }
+
+    const response = await fetch("/api/contracts", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    //
     const json = await response.json()
     setCode(json.code)
   }
@@ -96,6 +88,15 @@ function Deploy() {
           readOnly
           value={code}
         />
+        {code === "" ? null : (
+          <a
+            href={`https://gateway.ipfs.io/ipfs/${PINATA_CONTRACT_ID}`}
+            target="_blank"
+            className="text-xs"
+          >
+            See contract on IPFS
+          </a>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <p>See the contract response</p>
@@ -107,6 +108,15 @@ function Deploy() {
           value={result}
           className="min-h-64 bg-slate-200 rounded-lg p-4"
         />
+        {contractAddress === "" ? null : (
+          <a
+            className="text-xs"
+            href={`https://sepolia.scrollscan.dev/address/${contractAddress}`}
+            target="_blank"
+          >
+            See contract on Scrollscan
+          </a>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <p>Save the data on Pinata</p>
