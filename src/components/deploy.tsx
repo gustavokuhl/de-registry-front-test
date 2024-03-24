@@ -101,6 +101,8 @@ function Deploy() {
       body: JSON.stringify(relData),
     })
     console.log(await relResponse.json())
+
+    await fetchContractData()
   }
 
   async function handleSignFile(formData: FormData) {
@@ -393,13 +395,13 @@ function Deploy() {
             </Button>
           </div>
           <div className="flex flex-col gap-1">
-            <Button onClick={fetchContractData}>Fetch data for user</Button>
             <textarea
               className="text-sm min-h-64 bg-slate-200 rounded-lg p-4"
               name="contractCode"
               readOnly
               value={JSON.stringify(contractData, null, 2)}
             />
+            <Button onClick={fetchContractData}>Fetch data for user</Button>
           </div>
         </>
       ) : null}
