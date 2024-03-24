@@ -86,7 +86,9 @@ function Deploy() {
 
   async function saveOnScroll() {
     const userWalletAddress = await userWallet?.getAddress()
-    if (!userWalletAddress) return
+    if (!userWalletAddress) return console.error("No user wallet")
+    if (pinataJsonAddress === "") return console.error("No JSON CID")
+    if (pinataPdfAddress === "") return console.error("No PDF CID")
 
     const relData = {
       cidOwnerAddress: userWalletAddress.substring(2),
@@ -121,18 +123,6 @@ function Deploy() {
     console.log(result)
 
     setPinataPdfAddress(result.IpfsHash)
-
-    const relData = {
-      cidOwnerAddress: "6ad1BB9DE62B004AEcdaB504F5C6Ec18f494D08d",
-      pdfCID: result.IpfsHash,
-    }
-    const relResponse = await fetch("/api/contracts/rel", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(relData),
-    })
   }
 
   async function deployCode() {
@@ -370,7 +360,9 @@ function Deploy() {
                 className="bg-slate-200 rounded-lg p-2"
                 accept="application/pdf"
               />
-              <Button type="submit">Save on Pinata</Button>
+              <Button disabled={pinataPdfAddress !== ""} type="submit">
+                Save on Pinata
+              </Button>
             </form>
             <Button
               disabled={pinataPdfAddress === ""}
