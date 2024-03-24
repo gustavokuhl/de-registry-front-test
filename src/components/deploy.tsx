@@ -70,8 +70,11 @@ function Deploy() {
   }
 
   async function saveOnScroll() {
+    const userWalletAddress = await userWallet?.getAddress()
+    if (!userWalletAddress) return
+
     const relData = {
-      cidOwnerAddress: userWallet?.getAddress(),
+      cidOwnerAddress: userWalletAddress.substring(2),
       pdfCID: pinataPdfAddress,
       jsonCID: pinataJsonAddress,
     }
@@ -113,7 +116,6 @@ function Deploy() {
       },
       body: JSON.stringify(relData),
     })
-    console.log(await relResponse.json())
   }
 
   async function deployCode() {
@@ -322,7 +324,7 @@ function Deploy() {
               </div>
 
               <Button
-                // disabled={contractAddress === "" || pinataJsonAddress !== ""}
+                disabled={contractAddress === "" || pinataJsonAddress !== ""}
                 type="submit"
               >
                 Save on Pinata
