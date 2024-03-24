@@ -146,6 +146,7 @@ function Deploy() {
         <p>Save the data on Pinata</p>
         <form className="flex flex-col gap-2" action={saveOnPinata}>
           <input
+            required
             className="bg-slate-200 rounded-lg p-2"
             type="text"
             value={contractAddress}
@@ -156,6 +157,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Supply Agent</p>
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -163,6 +165,7 @@ function Deploy() {
               name="supplyAgent.name"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -170,6 +173,7 @@ function Deploy() {
               name="supplyAgent.email"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -177,6 +181,7 @@ function Deploy() {
               name="supplyAgent.cnpj"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -184,6 +189,7 @@ function Deploy() {
               name="supplyAgent.inscricaoEstadual"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -194,6 +200,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Supply Area</p>
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -204,6 +211,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Physical Address</p>
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -211,6 +219,7 @@ function Deploy() {
               name="supplyAgent.address.cep"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -218,6 +227,7 @@ function Deploy() {
               name="supplyAgent.address.street"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -225,6 +235,7 @@ function Deploy() {
               name="supplyAgent.address.city"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -232,6 +243,7 @@ function Deploy() {
               name="supplyAgent.address.state"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -243,6 +255,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Contract Data</p>
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -250,6 +263,7 @@ function Deploy() {
               name="duration"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -257,6 +271,7 @@ function Deploy() {
               name="since"
             />
             <input
+              required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -289,6 +304,7 @@ function Deploy() {
         <p>Sign your document with the off-chain version</p>
         <form action={handleSignFile} className="flex flex-col gap-1">
           <input
+            required
             type="file"
             name="signFile"
             className="bg-slate-200 rounded-lg p-2"
