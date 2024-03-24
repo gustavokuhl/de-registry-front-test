@@ -1,13 +1,9 @@
-import { promises as fs } from "fs"
-
 export async function POST(request: Request) {
   try {
-    const code = await fs.readFile(
-      process.cwd() + "/public/contracts/Contract.sol",
-      "utf8"
+    const res = await fetch(
+      "https://gateway.ipfs.io/ipfs/QmfAvVLUUcsdDp25ZWkivxTGjyFDBtaXfcunhMe27AWxgY"
     )
-
-    return Response.json({ code: code })
+    return Response.json({ code: await res.text() })
   } catch (err) {
     console.error(err)
   }

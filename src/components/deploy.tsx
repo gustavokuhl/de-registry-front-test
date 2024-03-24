@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Button from "./button"
 
 function Deploy() {
   const [code, setCode] = useState("")
 
-  async function clickButton() {
+  async function deployCode() {
     const resDeploy = await fetch("/api", {
       method: "POST",
       headers: {
@@ -18,25 +18,24 @@ function Deploy() {
     console.log(await resDeploy.json())
   }
 
-  useEffect(() => {
-    async function updateCode() {
-      const response = await fetch("/api/contracts", { method: "POST" })
-      const json = await response.json()
-      setCode(json.code)
-    }
-    updateCode()
-  }, [])
+  async function fetchContract() {
+    const response = await fetch("/api/contracts", { method: "POST" })
+    console.log(response)
+    const json = await response.json()
+    setCode(json.code)
+  }
 
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-xl">Test API</h1>
       <p>Verify your contract</p>
+      <Button onClick={fetchContract}>Fetch Contract from IPFS</Button>
       <textarea
         className="min-h-64 bg-slate-200 rounded-lg p-4"
         readOnly
         value={code}
       />
-      <Button className="" onClick={clickButton}>
+      <Button disabled={code === ""} className="" onClick={deployCode}>
         Deploy on Otavio API
       </Button>
     </div>
