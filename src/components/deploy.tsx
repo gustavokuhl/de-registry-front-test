@@ -10,7 +10,7 @@ function Deploy() {
   const [result, setResult] = useState<any>()
   const [deploying, setDeploying] = useState<boolean>(false)
   const [contractAddress, setContractAddress] = useState<string>("")
-  const [pinataAddress, setPinataAddress] = useState<string>("")
+  const [pinataJsonAddress, setPinataJsonAddress] = useState<string>("")
   const [pinataPdfAddress, setPinataPdfAddress] = useState<string>("")
 
   async function fetchSampleContract() {
@@ -60,9 +60,26 @@ function Deploy() {
       },
       body: JSON.stringify(data),
     })
+
     const json = await response.json()
-    setPinataAddress(json.IpfsHash)
+    setPinataJsonAddress(json.IpfsHash)
     console.log(json)
+  }
+
+  async function saveOnScroll() {
+    const relData = {
+      cidOwnerAddress: "af83f96944ceda6052AB0B9F78adFEb7661A6Ed7",
+      pdfCID: pinataPdfAddress,
+      jsonCID: pinataJsonAddress,
+    }
+    const relResponse = await fetch("/api/contracts/rel", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(relData),
+    })
+    console.log(await relResponse.json())
   }
 
   async function handleSignFile(formData: FormData) {
@@ -81,6 +98,19 @@ function Deploy() {
     console.log(result)
 
     setPinataPdfAddress(result.IpfsHash)
+
+    const relData = {
+      cidOwnerAddress: "6ad1BB9DE62B004AEcdaB504F5C6Ec18f494D08d",
+      pdfCID: result.IpfsHash,
+    }
+    const relResponse = await fetch("/api/contracts/rel", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(relData),
+    })
+    console.log(await relResponse.json())
   }
 
   async function deployCode() {
@@ -147,7 +177,7 @@ function Deploy() {
         <p>Save the data on Pinata</p>
         <form className="flex flex-col gap-2" action={saveOnPinata}>
           <input
-            required
+            // required
             className="bg-slate-200 rounded-lg p-2"
             type="text"
             value={contractAddress}
@@ -158,7 +188,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Supply Agent</p>
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -166,7 +196,7 @@ function Deploy() {
               name="supplyAgent.name"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="email"
@@ -174,7 +204,7 @@ function Deploy() {
               name="supplyAgent.email"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -182,7 +212,7 @@ function Deploy() {
               name="supplyAgent.cnpj"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -190,7 +220,7 @@ function Deploy() {
               name="supplyAgent.inscricaoEstadual"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -201,7 +231,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Supply Area</p>
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -212,7 +242,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Physical Address</p>
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -220,7 +250,7 @@ function Deploy() {
               name="supplyAgent.address.cep"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -228,7 +258,7 @@ function Deploy() {
               name="supplyAgent.address.street"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -236,7 +266,7 @@ function Deploy() {
               name="supplyAgent.address.city"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -244,7 +274,7 @@ function Deploy() {
               name="supplyAgent.address.state"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -256,7 +286,7 @@ function Deploy() {
           <div className="flex flex-col gap-1">
             <p className="text-xs">Contract Data</p>
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -264,7 +294,7 @@ function Deploy() {
               name="duration"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="number"
@@ -272,7 +302,7 @@ function Deploy() {
               name="since"
             />
             <input
-              required
+              // required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
               type="text"
@@ -282,17 +312,17 @@ function Deploy() {
           </div>
 
           <Button
-            disabled={contractAddress === "" || pinataAddress !== ""}
+            // disabled={contractAddress === "" || pinataJsonAddress !== ""}
             type="submit"
           >
             Save on Pinata
           </Button>
         </form>
         <Button
-          disabled={pinataAddress === ""}
+          disabled={pinataJsonAddress === ""}
           onClick={() =>
             window.open(
-              "https://gateway.ipfs.io/ipfs/" + pinataAddress,
+              "https://gateway.ipfs.io/ipfs/" + pinataJsonAddress,
               "_blank",
               "noopener"
             )
@@ -305,7 +335,7 @@ function Deploy() {
         <p>Sign your document with the off-chain version</p>
         <form action={handleSignFile} className="flex flex-col gap-1">
           <input
-            required
+            // required
             type="file"
             name="signFile"
             className="bg-slate-200 rounded-lg p-2"
@@ -324,6 +354,15 @@ function Deploy() {
           }}
         >
           View on Pinata
+        </Button>
+      </div>
+      <div className="flex flex-col gap-1">
+        <p>Save the IPFS data on Scroll</p>
+        <Button
+          onClick={saveOnScroll}
+          disabled={pinataPdfAddress === "" || pinataJsonAddress === ""}
+        >
+          Save data on Scroll
         </Button>
       </div>
     </div>
