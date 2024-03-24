@@ -1,4 +1,3 @@
-// const pinataSDK = require("@pinata/sdk")
 import pinataSDK from "@pinata/sdk"
 
 const pinata = new pinataSDK({

@@ -62,6 +62,7 @@ function Deploy() {
     })
     const json = await response.json()
     setPinataAddress(json.IpfsHash)
+    console.log(json)
   }
 
   async function handleSignFile(formData: FormData) {
@@ -168,7 +169,7 @@ function Deploy() {
               required
               disabled={contractAddress === ""}
               className="bg-slate-200 rounded-lg p-2"
-              type="text"
+              type="email"
               placeholder="email"
               name="supplyAgent.email"
             />
