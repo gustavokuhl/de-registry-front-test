@@ -28,7 +28,6 @@ function DeployForm() {
     }
 
     const res = await pinata.pinJSONToIPFS(json)
-    console.log(res)
   }
 
   return (

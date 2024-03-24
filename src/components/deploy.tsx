@@ -19,13 +19,11 @@ function Deploy() {
   })
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    console.log([e.target.name], e.target.value)
     setData((data) => ({ ...data, [e.target.name]: e.target.value }))
   }
 
-  async function fetchContract() {
+  async function fetchSampleContract() {
     const response = await fetch("/api/contracts", { method: "POST" })
-    console.log(response)
     const json = await response.json()
     setCode(json.code)
   }
@@ -54,7 +52,6 @@ function Deploy() {
 
     const json = await resDeploy.json()
 
-    console.log(resDeploy)
     setResult(JSON.stringify(json, null, 2))
     setData((data) => ({ ...data, address: json.contractAddress }))
     setDeploying(false)
@@ -65,7 +62,7 @@ function Deploy() {
       <h1 className="text-xl font-bold">Test API</h1>
       <div className="flex flex-col gap-1">
         <p>Verify your contract</p>
-        <Button onClick={fetchContract}>
+        <Button onClick={fetchSampleContract}>
           Fetch Example Contract from IPFS
         </Button>
         <textarea
@@ -111,7 +108,10 @@ function Deploy() {
           readOnly
           disabled
         />
-        <Button disabled={code === ""} onClick={saveOnPinata}>
+        <Button
+          disabled={data.address === "" || pinataAddress !== ""}
+          onClick={saveOnPinata}
+        >
           Save on Pinata
         </Button>
         <Button
