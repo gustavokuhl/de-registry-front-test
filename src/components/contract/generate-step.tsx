@@ -1,3 +1,5 @@
+import { Mail } from "lucide-react"
+import Image from "next/image"
 import { useState } from "react"
 
 function GenerateStep({ nextStep }: { nextStep: () => void }) {
@@ -11,7 +13,8 @@ function GenerateStep({ nextStep }: { nextStep: () => void }) {
   return (
     <>
       <div className="collapse collapse-arrow bg-base-200 border border-primary">
-        <input type="radio" name="my-accordion-2" checked={accordion === 1} />
+        {/* <input type="radio" name="my-accordion-2" checked={accordion === 1} /> */}
+        <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-bold">
           <span className="text-primary font-extrabold">1. </span>
           SELECT A DOCUMENT TEMPLATE
@@ -40,8 +43,8 @@ function GenerateStep({ nextStep }: { nextStep: () => void }) {
         <input
           type="radio"
           name="my-accordion-2"
-          disabled={accordion < 2}
-          checked={accordion === 2}
+          // disabled={accordion < 2}
+          // checked={accordion === 2}
         />
         <div className="collapse-title text-xl font-bold">
           <span className="text-primary font-extrabold">2. </span>
@@ -94,14 +97,27 @@ function GenerateStep({ nextStep }: { nextStep: () => void }) {
         <input
           type="radio"
           name="my-accordion-2"
-          disabled={accordion < 3}
-          checked={accordion === 3}
+          // disabled={accordion < 3}
+          // checked={accordion === 3}
         />
         <div className="collapse-title text-xl font-bold">
           <span className="text-primary font-extrabold">3. </span>
           GET DOCUMENT READY FOR PRINT
         </div>
         <div className="collapse-content flex flex-col gap-2 items-center">
+          <div className="indicator mt-4">
+            <span className="indicator-item indicator-start">
+              <div className="p-2 bg-white rounded-full">
+                <Mail color="black" />
+              </div>
+            </span>
+            <Image
+              src="/images/sstm-doc.png"
+              alt="mail doc image"
+              width={120}
+              height={0}
+            />
+          </div>
           <p className="font-bold">YOUR SMART CONTRACT IS ON THE WAY!</p>
           <p className="text-xs">
             Please check the e-mail{" "}

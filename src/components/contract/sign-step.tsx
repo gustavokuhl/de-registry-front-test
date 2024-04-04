@@ -1,3 +1,6 @@
+import { Printer } from "lucide-react"
+import Image from "next/image"
+
 function SignStep({ nextStep }: { nextStep: () => void }) {
   return (
     <>
@@ -34,6 +37,19 @@ function SignStep({ nextStep }: { nextStep: () => void }) {
           PRINT & SIGN
         </div>
         <div className="collapse-content flex flex-col gap-2 items-center">
+          <div className="indicator mt-4">
+            <span className="indicator-item indicator-start">
+              <div className="p-2 bg-white rounded-full">
+                <Printer color="black" />
+              </div>
+            </span>
+            <Image
+              src="/images/sstm-doc.png"
+              alt="mail doc image"
+              width={120}
+              height={0}
+            />
+          </div>
           <p className="font-bold">DOWNLOAD, PRINT & SIGN</p>
           <p className="text-xs">It's time to get the paper sign.</p>
           <button className="btn mt-3 btn-primary">Download</button>

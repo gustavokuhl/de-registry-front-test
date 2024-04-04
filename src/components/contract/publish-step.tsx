@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 function PublishStep({ nextStep }: { nextStep: () => void }) {
   return (
     <>
@@ -34,6 +36,7 @@ function PublishStep({ nextStep }: { nextStep: () => void }) {
           UPLOAD SIGNED PAPER DOCUMENT
         </div>
         <div className="collapse-content flex flex-col gap-2 items-center">
+          <Image src="/images/pdf.png" alt="PDF image" width={74} height={90} />
           <p className="font-bold">UPLOAD YOUR DOCUMENT</p>
           <p className="text-xs">
             Please upload a document that was physically signed.
