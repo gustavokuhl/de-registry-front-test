@@ -4,13 +4,15 @@ import { useState } from "react"
 import GenerateStep from "./generate-step"
 import PublishStep from "./publish-step"
 import SignStep from "./sign-step"
+import ValidateStep from "./validate-step"
 
-type WizzardStep = "generate" | "sign" | "publish"
+type WizzardStep = "generate" | "sign" | "publish" | "validate"
 
 const stepIndexMap: Record<WizzardStep, number> = {
   generate: 0,
   sign: 1,
   publish: 2,
+  validate: 3,
 }
 
 function ContractWizzard() {
@@ -25,7 +27,10 @@ function ContractWizzard() {
       content = <SignStep nextStep={() => setStep("publish")} />
       break
     case "publish":
-      content = <PublishStep />
+      content = <PublishStep nextStep={() => setStep("validate")} />
+      break
+    case "validate":
+      content = <ValidateStep />
       break
   }
 
@@ -61,6 +66,15 @@ function ContractWizzard() {
           onClick={() => setStep("publish")}
         >
           Publish
+        </li>
+        <li
+          className={`
+            step ${stepIndex >= 3 ? "step-primary" : ""}
+            cursor-pointer
+          `}
+          onClick={() => setStep("validate")}
+        >
+          Validate
         </li>
       </ul>
       {content}

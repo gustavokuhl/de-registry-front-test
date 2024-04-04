@@ -1,4 +1,4 @@
-function PublishStep() {
+function PublishStep({ nextStep }: { nextStep: () => void }) {
   return (
     <>
       <div className="p-4 bg-base-200 border border-primary flex flex-col gap-4 w-full rounded-box">
