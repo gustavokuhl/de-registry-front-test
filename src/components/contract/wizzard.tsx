@@ -22,7 +22,7 @@ function ContractWizzard() {
       content = <GenerateStep nextStep={() => setStep("sign")} />
       break
     case "sign":
-      content = <SignStep />
+      content = <SignStep nextStep={() => setStep("publish")} />
       break
     case "publish":
       content = <PublishStep />
