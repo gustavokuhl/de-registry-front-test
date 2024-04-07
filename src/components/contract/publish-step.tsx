@@ -48,7 +48,10 @@ function PublishStep({ nextStep }: { nextStep: () => void }) {
           <button className="btn mt-3 btn-primary">Upload now</button>
         </div>
       </div>
-      <button className="btn mt-3 btn-primary self-start w-full">
+      <button
+        className="btn mt-3 btn-primary self-start w-full"
+        onClick={nextStep}
+      >
         Next step
       </button>
     </>

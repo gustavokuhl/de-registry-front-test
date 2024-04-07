@@ -1,21 +1,16 @@
 "use client"
-import { ScrollSepoliaTestnet } from "@thirdweb-dev/chains"
-import { ThirdwebProvider, embeddedWallet } from "@thirdweb-dev/react"
+import { ThirdwebProvider } from "thirdweb/react"
+
+import { defineChain } from "thirdweb"
+
+const ScrollSepoliaTestnet = defineChain(534351)
 
 function Providers({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return (
-    <ThirdwebProvider
-      activeChain={ScrollSepoliaTestnet}
-      clientId={process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID!}
-      supportedWallets={[embeddedWallet()]}
-    >
-      {children}
-    </ThirdwebProvider>
-  )
+  return <ThirdwebProvider>{children}</ThirdwebProvider>
 }
 
 export default Providers
