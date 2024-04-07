@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { useActiveWallet } from "thirdweb/react"
 import GenerateStep from "./generate-step"
 import PublishStep from "./publish-step"
 import SignStep from "./sign-step"
@@ -17,7 +16,6 @@ const stepIndexMap: Record<WizzardStep, number> = {
 }
 
 function ContractWizzard() {
-  const wallet = useActiveWallet()
   const [step, setStep] = useState<WizzardStep>("generate")
 
   let content
@@ -39,7 +37,7 @@ function ContractWizzard() {
   const stepIndex = stepIndexMap[step]
 
   return (
-    <div className="w-full max-w-4xl flex flex-col gap-4 items-center border border-primary px-4 py-8 rounded-2xl">
+    <div className="w-full flex flex-col gap-4 items-center border border-primary px-4 py-8 rounded-2xl">
       <h2 className="text-xl font-bold">Create new contracts</h2>
       <ul className="steps">
         <li
