@@ -1,8 +1,7 @@
 "use client"
 
-import { ethClient, wallets } from "@/utils/wallet/client"
 import { useState } from "react"
-import { ConnectButton, ConnectEmbed, useActiveWallet } from "thirdweb/react"
+import { useActiveWallet } from "thirdweb/react"
 import GenerateStep from "./generate-step"
 import PublishStep from "./publish-step"
 import SignStep from "./sign-step"
@@ -40,58 +39,47 @@ function ContractWizzard() {
   const stepIndex = stepIndexMap[step]
 
   return (
-    <div className="w-full flex flex-col gap-4 items-center border border-primary px-4 py-8 rounded-2xl">
-      {wallet ? (
-        <>
-          <ConnectButton client={ethClient} />
-          <h2 className="text-xl font-bold">Create new contracts</h2>
-          <ul className="steps">
-            <li
-              className={`
+    <div className="w-full max-w-4xl flex flex-col gap-4 items-center border border-primary px-4 py-8 rounded-2xl">
+      <h2 className="text-xl font-bold">Create new contracts</h2>
+      <ul className="steps">
+        <li
+          className={`
             step ${stepIndex >= 0 ? "step-primary" : ""}
             cursor-pointer
           `}
-              onClick={() => setStep("generate")}
-            >
-              Generate
-            </li>
-            <li
-              className={`
+          onClick={() => setStep("generate")}
+        >
+          Generate
+        </li>
+        <li
+          className={`
             step ${stepIndex >= 1 ? "step-primary" : ""}
             cursor-pointer
         `}
-              onClick={() => setStep("sign")}
-            >
-              Sign
-            </li>
-            <li
-              className={`
+          onClick={() => setStep("sign")}
+        >
+          Sign
+        </li>
+        <li
+          className={`
             step ${stepIndex >= 2 ? "step-primary" : ""}
             cursor-pointer
           `}
-              onClick={() => setStep("publish")}
-            >
-              Publish
-            </li>
-            <li
-              className={`
+          onClick={() => setStep("publish")}
+        >
+          Publish
+        </li>
+        <li
+          className={`
             step ${stepIndex >= 3 ? "step-primary" : ""}
             cursor-pointer
           `}
-              onClick={() => setStep("validate")}
-            >
-              Validate
-            </li>
-          </ul>
-          {content}
-        </>
-      ) : (
-        <ConnectEmbed
-          client={ethClient}
-          wallets={wallets}
-          showThirdwebBranding={false}
-        />
-      )}
+          onClick={() => setStep("validate")}
+        >
+          Validate
+        </li>
+      </ul>
+      {content}
     </div>
   )
 }

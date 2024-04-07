@@ -17,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ minHeight: "100vh" }}>
       <Providers>
-        <body className={`${inter.className} w-100 h-full`}>
+        <body className={`${inter.className} w-100 min-h-screen flex flex-col`}>
           <Navbar />
           {children}
         </body>

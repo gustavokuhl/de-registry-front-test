@@ -1,16 +1,24 @@
 "use client"
 
-import { ethClient } from "@/utils/wallet/client"
-import { ConnectButton } from "thirdweb/react"
+import { ethClient, wallets } from "@/utils/wallet/client"
+import { ConnectButton, useActiveWallet } from "thirdweb/react"
 
 function Navbar() {
+  const wallet = useActiveWallet()
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <a className="btn btn-ghost text-xl">SS-TM</a>
       </div>
       <div className="navbar-end">
-        <ConnectButton client={ethClient} />
+        {wallet ? (
+          <ConnectButton
+            client={ethClient}
+            connectButton={{ label: "Conectar" }}
+            wallets={wallets}
+          />
+        ) : null}
       </div>
     </div>
   )
