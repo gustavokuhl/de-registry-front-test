@@ -1,7 +1,7 @@
 "use client"
 
 import { SmartContractData } from "@/app/api/contracts/retrieve/route"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useActiveWallet } from "thirdweb/react"
 import ListItem from "./list-item"
 
@@ -35,6 +35,10 @@ function ContractList() {
       setFetchingData(false)
     }
   }
+
+  useEffect(() => {
+    fetchContractData()
+  }, [wallet])
 
   return (
     <div className="w-full flex flex-col gap-4 items-center border border-primary px-4 py-8 rounded-2xl">

@@ -11,8 +11,6 @@ export async function POST(request: Request) {
   if (jsonCID) data.jsonCID = jsonCID
   if (pdfCID) data.pdfCID = pdfCID
 
-  console.log(data)
-
   try {
     const res = await fetch(
       "https://getcontractdataapi.fly.dev/AddCIDToContract",
