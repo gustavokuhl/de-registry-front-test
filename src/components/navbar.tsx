@@ -1,6 +1,7 @@
 "use client"
 
 import { ethClient, wallets } from "@/utils/wallet/client"
+import Link from "next/link"
 import { ConnectButton, useActiveWallet } from "thirdweb/react"
 
 function Navbar() {
@@ -9,7 +10,9 @@ function Navbar() {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">SS-TM</a>
+        <Link href={"/"} className="btn btn-ghost text-xl">
+          SS-TM
+        </Link>
       </div>
       <div className="navbar-end">
         {wallet ? (

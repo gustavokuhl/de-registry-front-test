@@ -1,6 +1,7 @@
 "use client"
 
 import { SmartContractData } from "@/app/api/contracts/retrieve/route"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useActiveWallet } from "thirdweb/react"
 import ListItem from "./list-item"
@@ -69,17 +70,24 @@ function ContractList() {
           </tbody>
         </table>
       </div>
-      <button
-        className="btn w-full mt-3 btn-primary self-start"
-        onClick={fetchContractData}
-        disabled={fetchingData}
-      >
-        {fetchingData ? (
-          <span className="loading loading-spinner loading-md"></span>
-        ) : (
-          "Buscar dados"
-        )}
-      </button>
+      <div className="flex flex-col gap-1 w-full">
+        <button
+          className="btn w-full btn-primary self-start"
+          onClick={fetchContractData}
+          disabled={fetchingData}
+        >
+          {fetchingData ? (
+            <span className="loading loading-spinner loading-md"></span>
+          ) : (
+            "Buscar dados"
+          )}
+        </button>
+        <Link href={"/contract"}>
+          <button className="btn w-full btn-primary btn-outline self-start">
+            Adicionar contrato
+          </button>
+        </Link>
+      </div>
     </div>
   )
 }
